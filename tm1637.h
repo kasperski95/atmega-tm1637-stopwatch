@@ -87,10 +87,14 @@ void TM1637_set_brightness(const uint8_t value);
  */
 void TM1637_display_segments(const uint8_t position, const uint8_t segments);
 
-/**
- * Display digit ('0'..'9') at position (0x00..0x03)
- */
-void TM1637_display_digit(const uint8_t position, const uint8_t digit);
+
+
+
+void TM1637_display_c_str(const char cstr[]);
+
+void TM1637_display_integer(int32_t number);
+
+void TM1637_display_char(const uint8_t position, const uint8_t character);
 
 /**
  * Display colon on/off.

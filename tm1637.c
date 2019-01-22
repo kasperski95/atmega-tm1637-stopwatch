@@ -37,7 +37,7 @@ static uint8_t TM1637_write_byte(uint8_t value);
 
 static uint8_t _config = TM1637_SET_DISPLAY_ON | TM1637_BRIGHTNESS_MAX;
 static uint8_t _segments = 0xff;
-PROGMEM const uint8_t _digit2segments[] =
+PROGMEM const uint8_t _chars2segments[] =
 {
 	0x3F, // 0
 	0x06, // 1
@@ -48,7 +48,39 @@ PROGMEM const uint8_t _digit2segments[] =
 	0x7D, // 6
 	0x07, // 7
 	0x7F, // 8
-	0x6F  // 9
+	0x6F, // 9
+	0b01110111,  // A
+	0b01111100,  // b
+	0b00111001,  // C
+	0b01011110,  // d
+	0b01111001,  // E
+	0b01110001,  // F
+	0b01101111,  // 9
+	0b01110100,  // h
+	0b00110000,  // I
+	0b00001110,  // J
+	0b01110110,  // H
+	0b00111000,  // L
+	0b01010100,  // n
+	0b01010100,  // n
+	0b01011100,  // o
+	0b01110011,  // P
+	0b01100111,  // q
+	0b01010000,  // r
+	0b01101101,  // 5
+	0b01111000,  // t
+	0b00111110,  // U
+	0b00011100,  // u (v)
+	0b00011100,  // u (w)
+	0b01110110,  // H (x)
+	0b01100110,  // 4 (y)
+	0b01011011,  // 2 (z)
+	0b01000000,  // -
+	0b01001000,  // =
+	0b00000010,  // '
+	0b00000100,  // ,
+	0b00001000,  // _
+	0b00000000   // ' '
 };
 
 void
@@ -87,10 +119,64 @@ TM1637_display_segments(const uint8_t position, const uint8_t segments)
 }
 
 void
-TM1637_display_digit(const uint8_t position, const uint8_t digit)
-{
-	uint8_t segments = (digit < 10 ? pgm_read_byte_near((uint8_t *)&_digit2segments + digit) : 0x00);
+TM1637_display_integer(int32_t number) {
+    uint8_t buffer_size = 4;
+    char buffer[] = {' ',' ',' ',' ','\0'};
+    uint8_t i, bNegative = 0;
 
+    if (number > 9999) {
+        TM1637_display_c_str("E999");
+    } else if (number < -999) {
+        TM1637_display_c_str("E-99");
+    } else {
+        if (number < 0) {
+            bNegative = 1;
+            number *= -1;
+        }
+        i = buffer_size - 1;
+        for (; number > 0; --i) {
+            buffer[i] = (number % 10) + '0';
+            number /= 10;
+        }
+        if (bNegative) buffer[i] = '-';
+        TM1637_display_c_str(buffer);
+    }
+}
+
+void
+TM1637_display_c_str(const char c_str[]) {
+    uint8_t i = 0;
+    uint8_t strlen = TM1637_POSITION_MAX;
+    for (; i < TM1637_POSITION_MAX; ++i) {
+        if (c_str[i] == '\0') strlen = i;
+
+        if (i < strlen) TM1637_display_char(i, c_str[i]);
+        else TM1637_display_char(i, 0);
+    }
+}
+
+void
+TM1637_display_char(const uint8_t position, const uint8_t c)
+{
+	uint8_t segments;
+	int16_t offset = 0;
+	if (c >= '0' && c <= '9') offset = -'0';
+	if (c >= 'a' && c <= 'z') offset = -'a' + 10;
+	if (c >= 'A' && c <= 'Z') offset = -'A' + 10;
+
+	switch (c) {
+        case '-': offset = -'-' + 36; break;
+        case '=': offset = -'=' + 37; break;
+        case '\'': offset = -'\'' + 38; break;
+        case ',': offset = -',' + 39; break;
+        case '_': offset = -'_' + 40; break;
+        case ' ': offset = -' ' + 41; break;
+	}
+
+
+	segments = pgm_read_byte_near((uint8_t *)&_chars2segments + c + offset);
+
+	// display color, if is enabled
 	if (position == 0x01) {
 		segments = segments | (_segments & 0x80);
 		_segments = segments;
