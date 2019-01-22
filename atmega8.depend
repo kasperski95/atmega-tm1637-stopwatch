@@ -1,0 +1,19 @@
+# depslib dependency file v1.0
+1548144151 source:c:\users\arkad\onedrive\documents\edukacja\semestr iii\mikroprocesory i mikrokontrolery\_private\projekt\atmega8\fuse.c
+	<avr/io.h>
+
+1548149780 source:c:\users\arkad\onedrive\documents\edukacja\semestr iii\mikroprocesory i mikrokontrolery\_private\projekt\atmega8\main.c
+	<stdint.h>
+	<avr/io.h>
+	<util/delay.h>
+	"tm1637.h"
+
+1548145494 source:c:\users\arkad\onedrive\documents\edukacja\semestr iii\mikroprocesory i mikrokontrolery\_private\projekt\atmega8\tm1637.c
+	<avr/io.h>
+	<avr/pgmspace.h>
+	<util/delay.h>
+	"tm1637.h"
+
+1548145433 c:\users\arkad\onedrive\documents\edukacja\semestr iii\mikroprocesory i mikrokontrolery\_private\projekt\atmega8\tm1637.h
+	<stdint.h>
+
