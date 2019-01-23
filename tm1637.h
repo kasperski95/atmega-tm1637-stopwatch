@@ -85,16 +85,16 @@ void TM1637_set_brightness(const uint8_t value);
  * - for character '-', segments=0b01000000
  * - etc.
  */
-void TM1637_display_segments(const uint8_t position, const uint8_t segments);
+uint8_t TM1637_display_segments(const uint8_t position, const uint8_t segments);
 
 
 
 
-void TM1637_display_c_str(const char cstr[]);
+uint8_t TM1637_display_c_str(const char cstr[]);
 
-void TM1637_display_integer(int32_t number);
+uint8_t TM1637_display_integer(int32_t number);
 
-void TM1637_display_char(const uint8_t position, const uint8_t character);
+uint8_t TM1637_display_char(const uint8_t position, const uint8_t character);
 
 /**
  * Display colon on/off.

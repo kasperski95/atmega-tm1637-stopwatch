@@ -3,35 +3,37 @@ bin\atmega8.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00000424  00000000  00000000  00000094  2**1
+  0 .text         000005a2  00000000  00000000  000000b4  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000012  00800060  00000424  000004b8  2**0
+  1 .data         00000012  00800060  000005a2  00000656  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .fuse         00000002  00820000  00820000  000004ca  2**0
+  2 .bss          00000003  00800072  00800072  00000668  2**0
+                  ALLOC
+  3 .fuse         00000002  00820000  00820000  00000668  2**0
                   CONTENTS, ALLOC, LOAD, DATA
 
 Disassembly of section .text:
 
 00000000 <__vectors>:
    0:	27 c0       	rjmp	.+78     	; 0x50 <__ctors_end>
-   2:	39 c0       	rjmp	.+114    	; 0x76 <__bad_interrupt>
-   4:	38 c0       	rjmp	.+112    	; 0x76 <__bad_interrupt>
-   6:	37 c0       	rjmp	.+110    	; 0x76 <__bad_interrupt>
-   8:	36 c0       	rjmp	.+108    	; 0x76 <__bad_interrupt>
-   a:	35 c0       	rjmp	.+106    	; 0x76 <__bad_interrupt>
-   c:	34 c0       	rjmp	.+104    	; 0x76 <__bad_interrupt>
-   e:	33 c0       	rjmp	.+102    	; 0x76 <__bad_interrupt>
-  10:	32 c0       	rjmp	.+100    	; 0x76 <__bad_interrupt>
-  12:	31 c0       	rjmp	.+98     	; 0x76 <__bad_interrupt>
-  14:	30 c0       	rjmp	.+96     	; 0x76 <__bad_interrupt>
-  16:	2f c0       	rjmp	.+94     	; 0x76 <__bad_interrupt>
-  18:	2e c0       	rjmp	.+92     	; 0x76 <__bad_interrupt>
-  1a:	2d c0       	rjmp	.+90     	; 0x76 <__bad_interrupt>
-  1c:	2c c0       	rjmp	.+88     	; 0x76 <__bad_interrupt>
-  1e:	2b c0       	rjmp	.+86     	; 0x76 <__bad_interrupt>
-  20:	2a c0       	rjmp	.+84     	; 0x76 <__bad_interrupt>
-  22:	29 c0       	rjmp	.+82     	; 0x76 <__bad_interrupt>
-  24:	28 c0       	rjmp	.+80     	; 0x76 <__bad_interrupt>
+   2:	42 c0       	rjmp	.+132    	; 0x88 <__vector_1>
+   4:	4f c0       	rjmp	.+158    	; 0xa4 <__vector_2>
+   6:	3f c0       	rjmp	.+126    	; 0x86 <__bad_interrupt>
+   8:	3e c0       	rjmp	.+124    	; 0x86 <__bad_interrupt>
+   a:	3d c0       	rjmp	.+122    	; 0x86 <__bad_interrupt>
+   c:	5f c0       	rjmp	.+190    	; 0xcc <__vector_6>
+   e:	3b c0       	rjmp	.+118    	; 0x86 <__bad_interrupt>
+  10:	3a c0       	rjmp	.+116    	; 0x86 <__bad_interrupt>
+  12:	39 c0       	rjmp	.+114    	; 0x86 <__bad_interrupt>
+  14:	38 c0       	rjmp	.+112    	; 0x86 <__bad_interrupt>
+  16:	37 c0       	rjmp	.+110    	; 0x86 <__bad_interrupt>
+  18:	36 c0       	rjmp	.+108    	; 0x86 <__bad_interrupt>
+  1a:	35 c0       	rjmp	.+106    	; 0x86 <__bad_interrupt>
+  1c:	34 c0       	rjmp	.+104    	; 0x86 <__bad_interrupt>
+  1e:	33 c0       	rjmp	.+102    	; 0x86 <__bad_interrupt>
+  20:	32 c0       	rjmp	.+100    	; 0x86 <__bad_interrupt>
+  22:	31 c0       	rjmp	.+98     	; 0x86 <__bad_interrupt>
+  24:	30 c0       	rjmp	.+96     	; 0x86 <__bad_interrupt>
 
 00000026 <_chars2segments>:
   26:	3f 06 5b 4f 66 6d 7d 07 7f 6f 77 7c 39 5e 79 71     ?.[Ofm}..ow|9^yq
@@ -50,8 +52,8 @@ Disassembly of section .text:
   5c:	10 e0       	ldi	r17, 0x00	; 0
   5e:	a0 e6       	ldi	r26, 0x60	; 96
   60:	b0 e0       	ldi	r27, 0x00	; 0
-  62:	e4 e2       	ldi	r30, 0x24	; 36
-  64:	f4 e0       	ldi	r31, 0x04	; 4
+  62:	e2 ea       	ldi	r30, 0xA2	; 162
+  64:	f5 e0       	ldi	r31, 0x05	; 5
   66:	02 c0       	rjmp	.+4      	; 0x6c <.do_copy_data_start>
 
 00000068 <.do_copy_data_loop>:
@@ -62,516 +64,710 @@ Disassembly of section .text:
   6c:	a2 37       	cpi	r26, 0x72	; 114
   6e:	b1 07       	cpc	r27, r17
   70:	d9 f7       	brne	.-10     	; 0x68 <.do_copy_data_loop>
-  72:	02 d0       	rcall	.+4      	; 0x78 <main>
-  74:	d5 c1       	rjmp	.+938    	; 0x420 <_exit>
 
-00000076 <__bad_interrupt>:
-  76:	c4 cf       	rjmp	.-120    	; 0x0 <__vectors>
+00000072 <__do_clear_bss>:
+  72:	10 e0       	ldi	r17, 0x00	; 0
+  74:	a2 e7       	ldi	r26, 0x72	; 114
+  76:	b0 e0       	ldi	r27, 0x00	; 0
+  78:	01 c0       	rjmp	.+2      	; 0x7c <.do_clear_bss_start>
 
-00000078 <main>:
-  78:	1f 93       	push	r17
-  7a:	81 e0       	ldi	r24, 0x01	; 1
-  7c:	60 e0       	ldi	r22, 0x00	; 0
-  7e:	6c d0       	rcall	.+216    	; 0x158 <TM1637_init>
-  80:	80 e0       	ldi	r24, 0x00	; 0
-  82:	95 d0       	rcall	.+298    	; 0x1ae <TM1637_display_colon>
-  84:	66 ec       	ldi	r22, 0xC6	; 198
-  86:	7e ef       	ldi	r23, 0xFE	; 254
-  88:	8f ef       	ldi	r24, 0xFF	; 255
-  8a:	9f ef       	ldi	r25, 0xFF	; 255
-  8c:	07 d1       	rcall	.+526    	; 0x29c <TM1637_display_integer>
-  8e:	10 e0       	ldi	r17, 0x00	; 0
-  90:	61 2f       	mov	r22, r17
-  92:	70 e0       	ldi	r23, 0x00	; 0
-  94:	80 e0       	ldi	r24, 0x00	; 0
-  96:	90 e0       	ldi	r25, 0x00	; 0
-  98:	1f 5f       	subi	r17, 0xFF	; 255
-  9a:	00 d1       	rcall	.+512    	; 0x29c <TM1637_display_integer>
-  9c:	f9 cf       	rjmp	.-14     	; 0x90 <main+0x18>
+0000007a <.do_clear_bss_loop>:
+  7a:	1d 92       	st	X+, r1
 
-0000009e <TM1637_stop>:
-  9e:	ad 98       	cbi	0x15, 5	; 21
-  a0:	8d e0       	ldi	r24, 0x0D	; 13
-  a2:	98 2f       	mov	r25, r24
-  a4:	9a 95       	dec	r25
-  a6:	f1 f7       	brne	.-4      	; 0xa4 <TM1637_stop+0x6>
-  a8:	ac 98       	cbi	0x15, 4	; 21
-  aa:	98 2f       	mov	r25, r24
-  ac:	9a 95       	dec	r25
-  ae:	f1 f7       	brne	.-4      	; 0xac <TM1637_stop+0xe>
-  b0:	ad 9a       	sbi	0x15, 5	; 21
-  b2:	8a 95       	dec	r24
-  b4:	f1 f7       	brne	.-4      	; 0xb2 <TM1637_stop+0x14>
-  b6:	ac 9a       	sbi	0x15, 4	; 21
-  b8:	08 95       	ret
+0000007c <.do_clear_bss_start>:
+  7c:	a5 37       	cpi	r26, 0x75	; 117
+  7e:	b1 07       	cpc	r27, r17
+  80:	e1 f7       	brne	.-8      	; 0x7a <.do_clear_bss_loop>
+  82:	91 d0       	rcall	.+290    	; 0x1a6 <main>
+  84:	8c c2       	rjmp	.+1304   	; 0x59e <_exit>
 
-000000ba <TM1637_write_byte>:
-  ba:	20 e0       	ldi	r18, 0x00	; 0
-  bc:	3d e0       	ldi	r19, 0x0D	; 13
-  be:	ad 98       	cbi	0x15, 5	; 21
-  c0:	93 2f       	mov	r25, r19
-  c2:	9a 95       	dec	r25
-  c4:	f1 f7       	brne	.-4      	; 0xc2 <TM1637_write_byte+0x8>
-  c6:	80 ff       	sbrs	r24, 0
-  c8:	02 c0       	rjmp	.+4      	; 0xce <TM1637_write_byte+0x14>
-  ca:	ac 9a       	sbi	0x15, 4	; 21
-  cc:	01 c0       	rjmp	.+2      	; 0xd0 <TM1637_write_byte+0x16>
-  ce:	ac 98       	cbi	0x15, 4	; 21
-  d0:	ad 9a       	sbi	0x15, 5	; 21
-  d2:	93 2f       	mov	r25, r19
-  d4:	9a 95       	dec	r25
-  d6:	f1 f7       	brne	.-4      	; 0xd4 <TM1637_write_byte+0x1a>
-  d8:	2f 5f       	subi	r18, 0xFF	; 255
-  da:	28 30       	cpi	r18, 0x08	; 8
-  dc:	11 f0       	breq	.+4      	; 0xe2 <TM1637_write_byte+0x28>
-  de:	86 95       	lsr	r24
-  e0:	ee cf       	rjmp	.-36     	; 0xbe <TM1637_write_byte+0x4>
-  e2:	ad 98       	cbi	0x15, 5	; 21
-  e4:	a4 98       	cbi	0x14, 4	; 20
-  e6:	ac 9a       	sbi	0x15, 4	; 21
-  e8:	8d e0       	ldi	r24, 0x0D	; 13
-  ea:	8a 95       	dec	r24
-  ec:	f1 f7       	brne	.-4      	; 0xea <TM1637_write_byte+0x30>
-  ee:	20 e0       	ldi	r18, 0x00	; 0
-  f0:	9c 9b       	sbis	0x13, 4	; 19
-  f2:	03 c0       	rjmp	.+6      	; 0xfa <TM1637_write_byte+0x40>
-  f4:	21 e0       	ldi	r18, 0x01	; 1
-  f6:	a4 9a       	sbi	0x14, 4	; 20
-  f8:	ac 98       	cbi	0x15, 4	; 21
-  fa:	8d e0       	ldi	r24, 0x0D	; 13
-  fc:	98 2f       	mov	r25, r24
-  fe:	9a 95       	dec	r25
- 100:	f1 f7       	brne	.-4      	; 0xfe <TM1637_write_byte+0x44>
- 102:	ad 9a       	sbi	0x15, 5	; 21
- 104:	98 2f       	mov	r25, r24
- 106:	9a 95       	dec	r25
- 108:	f1 f7       	brne	.-4      	; 0x106 <TM1637_write_byte+0x4c>
- 10a:	ad 98       	cbi	0x15, 5	; 21
- 10c:	8a 95       	dec	r24
- 10e:	f1 f7       	brne	.-4      	; 0x10c <TM1637_write_byte+0x52>
- 110:	a4 9a       	sbi	0x14, 4	; 20
- 112:	82 2f       	mov	r24, r18
- 114:	08 95       	ret
+00000086 <__bad_interrupt>:
+  86:	bc cf       	rjmp	.-136    	; 0x0 <__vectors>
 
-00000116 <TM1637_send_command>:
- 116:	ac 9a       	sbi	0x15, 4	; 21
- 118:	ad 9a       	sbi	0x15, 5	; 21
- 11a:	9d e0       	ldi	r25, 0x0D	; 13
- 11c:	9a 95       	dec	r25
- 11e:	f1 f7       	brne	.-4      	; 0x11c <TM1637_send_command+0x6>
- 120:	ac 98       	cbi	0x15, 4	; 21
- 122:	cb df       	rcall	.-106    	; 0xba <TM1637_write_byte>
- 124:	bc df       	rcall	.-136    	; 0x9e <TM1637_stop>
+00000088 <__vector_1>:
+  88:	1f 92       	push	r1
+  8a:	0f 92       	push	r0
+  8c:	0f b6       	in	r0, 0x3f	; 63
+  8e:	0f 92       	push	r0
+  90:	11 24       	eor	r1, r1
+  92:	10 92 73 00 	sts	0x0073, r1
+  96:	10 92 72 00 	sts	0x0072, r1
+  9a:	0f 90       	pop	r0
+  9c:	0f be       	out	0x3f, r0	; 63
+  9e:	0f 90       	pop	r0
+  a0:	1f 90       	pop	r1
+  a2:	18 95       	reti
+
+000000a4 <__vector_2>:
+  a4:	1f 92       	push	r1
+  a6:	0f 92       	push	r0
+  a8:	0f b6       	in	r0, 0x3f	; 63
+  aa:	0f 92       	push	r0
+  ac:	11 24       	eor	r1, r1
+  ae:	8f 93       	push	r24
+  b0:	9f 93       	push	r25
+  b2:	8a e0       	ldi	r24, 0x0A	; 10
+  b4:	90 e0       	ldi	r25, 0x00	; 0
+  b6:	90 93 73 00 	sts	0x0073, r25
+  ba:	80 93 72 00 	sts	0x0072, r24
+  be:	9f 91       	pop	r25
+  c0:	8f 91       	pop	r24
+  c2:	0f 90       	pop	r0
+  c4:	0f be       	out	0x3f, r0	; 63
+  c6:	0f 90       	pop	r0
+  c8:	1f 90       	pop	r1
+  ca:	18 95       	reti
+
+000000cc <__vector_6>:
+  cc:	1f 92       	push	r1
+  ce:	0f 92       	push	r0
+  d0:	0f b6       	in	r0, 0x3f	; 63
+  d2:	0f 92       	push	r0
+  d4:	11 24       	eor	r1, r1
+  d6:	8f 93       	push	r24
+  d8:	9f 93       	push	r25
+  da:	80 91 72 00 	lds	r24, 0x0072
+  de:	90 91 73 00 	lds	r25, 0x0073
+  e2:	01 96       	adiw	r24, 0x01	; 1
+  e4:	90 93 73 00 	sts	0x0073, r25
+  e8:	80 93 72 00 	sts	0x0072, r24
+  ec:	81 e0       	ldi	r24, 0x01	; 1
+  ee:	80 93 74 00 	sts	0x0074, r24
+  f2:	9f 91       	pop	r25
+  f4:	8f 91       	pop	r24
+  f6:	0f 90       	pop	r0
+  f8:	0f be       	out	0x3f, r0	; 63
+  fa:	0f 90       	pop	r0
+  fc:	1f 90       	pop	r1
+  fe:	18 95       	reti
+
+00000100 <init_external_interrupts>:
+ 100:	15 be       	out	0x35, r1	; 53
+ 102:	81 b3       	in	r24, 0x11	; 17
+ 104:	81 bb       	out	0x11, r24	; 17
+ 106:	92 9a       	sbi	0x12, 2	; 18
+ 108:	8b b7       	in	r24, 0x3b	; 59
+ 10a:	80 64       	ori	r24, 0x40	; 64
+ 10c:	8b bf       	out	0x3b, r24	; 59
+ 10e:	85 b7       	in	r24, 0x35	; 53
+ 110:	82 60       	ori	r24, 0x02	; 2
+ 112:	85 bf       	out	0x35, r24	; 53
+ 114:	81 b3       	in	r24, 0x11	; 17
+ 116:	81 bb       	out	0x11, r24	; 17
+ 118:	93 9a       	sbi	0x12, 3	; 18
+ 11a:	8b b7       	in	r24, 0x3b	; 59
+ 11c:	80 68       	ori	r24, 0x80	; 128
+ 11e:	8b bf       	out	0x3b, r24	; 59
+ 120:	85 b7       	in	r24, 0x35	; 53
+ 122:	88 60       	ori	r24, 0x08	; 8
+ 124:	85 bf       	out	0x35, r24	; 53
  126:	08 95       	ret
 
-00000128 <TM1637_send_config>:
- 128:	81 11       	cpse	r24, r1
- 12a:	88 e0       	ldi	r24, 0x08	; 8
- 12c:	68 30       	cpi	r22, 0x08	; 8
- 12e:	08 f0       	brcs	.+2      	; 0x132 <TM1637_send_config+0xa>
- 130:	67 e0       	ldi	r22, 0x07	; 7
- 132:	86 2b       	or	r24, r22
- 134:	80 93 70 00 	sts	0x0070, r24
- 138:	80 68       	ori	r24, 0x80	; 128
- 13a:	ed df       	rcall	.-38     	; 0x116 <TM1637_send_command>
- 13c:	08 95       	ret
+00000128 <init_timer_16_ctc>:
+ 128:	cf 93       	push	r28
+ 12a:	df 93       	push	r29
+ 12c:	ec 01       	movw	r28, r24
+ 12e:	60 34       	cpi	r22, 0x40	; 64
+ 130:	71 05       	cpc	r23, r1
+ 132:	c1 f0       	breq	.+48     	; 0x164 <init_timer_16_ctc+0x3c>
+ 134:	61 34       	cpi	r22, 0x41	; 65
+ 136:	71 05       	cpc	r23, r1
+ 138:	38 f4       	brcc	.+14     	; 0x148 <init_timer_16_ctc+0x20>
+ 13a:	61 30       	cpi	r22, 0x01	; 1
+ 13c:	71 05       	cpc	r23, r1
+ 13e:	71 f0       	breq	.+28     	; 0x15c <init_timer_16_ctc+0x34>
+ 140:	68 30       	cpi	r22, 0x08	; 8
+ 142:	71 05       	cpc	r23, r1
+ 144:	49 f4       	brne	.+18     	; 0x158 <init_timer_16_ctc+0x30>
+ 146:	0c c0       	rjmp	.+24     	; 0x160 <init_timer_16_ctc+0x38>
+ 148:	81 e0       	ldi	r24, 0x01	; 1
+ 14a:	60 30       	cpi	r22, 0x00	; 0
+ 14c:	78 07       	cpc	r23, r24
+ 14e:	61 f0       	breq	.+24     	; 0x168 <init_timer_16_ctc+0x40>
+ 150:	84 e0       	ldi	r24, 0x04	; 4
+ 152:	60 30       	cpi	r22, 0x00	; 0
+ 154:	78 07       	cpc	r23, r24
+ 156:	51 f0       	breq	.+20     	; 0x16c <init_timer_16_ctc+0x44>
+ 158:	90 e0       	ldi	r25, 0x00	; 0
+ 15a:	09 c0       	rjmp	.+18     	; 0x16e <init_timer_16_ctc+0x46>
+ 15c:	91 e0       	ldi	r25, 0x01	; 1
+ 15e:	07 c0       	rjmp	.+14     	; 0x16e <init_timer_16_ctc+0x46>
+ 160:	92 e0       	ldi	r25, 0x02	; 2
+ 162:	05 c0       	rjmp	.+10     	; 0x16e <init_timer_16_ctc+0x46>
+ 164:	93 e0       	ldi	r25, 0x03	; 3
+ 166:	03 c0       	rjmp	.+6      	; 0x16e <init_timer_16_ctc+0x46>
+ 168:	94 e0       	ldi	r25, 0x04	; 4
+ 16a:	01 c0       	rjmp	.+2      	; 0x16e <init_timer_16_ctc+0x46>
+ 16c:	95 e0       	ldi	r25, 0x05	; 5
+ 16e:	80 e8       	ldi	r24, 0x80	; 128
+ 170:	8f bd       	out	0x2f, r24	; 47
+ 172:	98 60       	ori	r25, 0x08	; 8
+ 174:	9e bd       	out	0x2e, r25	; 46
+ 176:	9b 01       	movw	r18, r22
+ 178:	40 e0       	ldi	r20, 0x00	; 0
+ 17a:	50 e0       	ldi	r21, 0x00	; 0
+ 17c:	60 e8       	ldi	r22, 0x80	; 128
+ 17e:	74 e8       	ldi	r23, 0x84	; 132
+ 180:	8e e1       	ldi	r24, 0x1E	; 30
+ 182:	90 e0       	ldi	r25, 0x00	; 0
+ 184:	cf d1       	rcall	.+926    	; 0x524 <__udivmodsi4>
+ 186:	ca 01       	movw	r24, r20
+ 188:	b9 01       	movw	r22, r18
+ 18a:	9e 01       	movw	r18, r28
+ 18c:	40 e0       	ldi	r20, 0x00	; 0
+ 18e:	50 e0       	ldi	r21, 0x00	; 0
+ 190:	c9 d1       	rcall	.+914    	; 0x524 <__udivmodsi4>
+ 192:	21 50       	subi	r18, 0x01	; 1
+ 194:	30 40       	sbci	r19, 0x00	; 0
+ 196:	3b bd       	out	0x2b, r19	; 43
+ 198:	2a bd       	out	0x2a, r18	; 42
+ 19a:	89 b7       	in	r24, 0x39	; 57
+ 19c:	80 61       	ori	r24, 0x10	; 16
+ 19e:	89 bf       	out	0x39, r24	; 57
+ 1a0:	df 91       	pop	r29
+ 1a2:	cf 91       	pop	r28
+ 1a4:	08 95       	ret
 
-0000013e <TM1637_set_brightness>:
- 13e:	90 91 70 00 	lds	r25, 0x0070
- 142:	68 2f       	mov	r22, r24
- 144:	67 70       	andi	r22, 0x07	; 7
- 146:	89 2f       	mov	r24, r25
- 148:	88 70       	andi	r24, 0x08	; 8
- 14a:	ee df       	rcall	.-36     	; 0x128 <TM1637_send_config>
- 14c:	08 95       	ret
+000001a6 <main>:
+ 1a6:	b8 9a       	sbi	0x17, 0	; 23
+ 1a8:	81 e0       	ldi	r24, 0x01	; 1
+ 1aa:	88 bb       	out	0x18, r24	; 24
+ 1ac:	60 e0       	ldi	r22, 0x00	; 0
+ 1ae:	ad d0       	rcall	.+346    	; 0x30a <TM1637_init>
+ 1b0:	a7 df       	rcall	.-178    	; 0x100 <init_external_interrupts>
+ 1b2:	8a e0       	ldi	r24, 0x0A	; 10
+ 1b4:	90 e0       	ldi	r25, 0x00	; 0
+ 1b6:	60 e4       	ldi	r22, 0x40	; 64
+ 1b8:	70 e0       	ldi	r23, 0x00	; 0
+ 1ba:	b6 df       	rcall	.-148    	; 0x128 <init_timer_16_ctc>
+ 1bc:	78 94       	sei
+ 1be:	80 91 74 00 	lds	r24, 0x0074
+ 1c2:	88 23       	and	r24, r24
+ 1c4:	e1 f3       	breq	.-8      	; 0x1be <main+0x18>
+ 1c6:	60 91 72 00 	lds	r22, 0x0072
+ 1ca:	70 91 73 00 	lds	r23, 0x0073
+ 1ce:	80 e0       	ldi	r24, 0x00	; 0
+ 1d0:	90 e0       	ldi	r25, 0x00	; 0
+ 1d2:	1c d1       	rcall	.+568    	; 0x40c <TM1637_display_integer>
+ 1d4:	10 92 74 00 	sts	0x0074, r1
+ 1d8:	f2 cf       	rjmp	.-28     	; 0x1be <main+0x18>
 
-0000014e <TM1637_enable>:
- 14e:	60 91 70 00 	lds	r22, 0x0070
- 152:	67 70       	andi	r22, 0x07	; 7
- 154:	e9 df       	rcall	.-46     	; 0x128 <TM1637_send_config>
- 156:	08 95       	ret
+000001da <TM1637_stop>:
+ 1da:	ad 98       	cbi	0x15, 5	; 21
+ 1dc:	8d e0       	ldi	r24, 0x0D	; 13
+ 1de:	98 2f       	mov	r25, r24
+ 1e0:	9a 95       	dec	r25
+ 1e2:	f1 f7       	brne	.-4      	; 0x1e0 <TM1637_stop+0x6>
+ 1e4:	ac 98       	cbi	0x15, 4	; 21
+ 1e6:	98 2f       	mov	r25, r24
+ 1e8:	9a 95       	dec	r25
+ 1ea:	f1 f7       	brne	.-4      	; 0x1e8 <TM1637_stop+0xe>
+ 1ec:	ad 9a       	sbi	0x15, 5	; 21
+ 1ee:	8a 95       	dec	r24
+ 1f0:	f1 f7       	brne	.-4      	; 0x1ee <TM1637_stop+0x14>
+ 1f2:	ac 9a       	sbi	0x15, 4	; 21
+ 1f4:	08 95       	ret
 
-00000158 <TM1637_init>:
- 158:	94 b3       	in	r25, 0x14	; 20
- 15a:	90 63       	ori	r25, 0x30	; 48
- 15c:	94 bb       	out	0x14, r25	; 20
- 15e:	95 b3       	in	r25, 0x15	; 21
- 160:	9f 7c       	andi	r25, 0xCF	; 207
- 162:	95 bb       	out	0x15, r25	; 21
- 164:	e1 df       	rcall	.-62     	; 0x128 <TM1637_send_config>
- 166:	08 95       	ret
+000001f6 <TM1637_write_byte>:
+ 1f6:	20 e0       	ldi	r18, 0x00	; 0
+ 1f8:	3d e0       	ldi	r19, 0x0D	; 13
+ 1fa:	ad 98       	cbi	0x15, 5	; 21
+ 1fc:	93 2f       	mov	r25, r19
+ 1fe:	9a 95       	dec	r25
+ 200:	f1 f7       	brne	.-4      	; 0x1fe <TM1637_write_byte+0x8>
+ 202:	80 ff       	sbrs	r24, 0
+ 204:	02 c0       	rjmp	.+4      	; 0x20a <TM1637_write_byte+0x14>
+ 206:	ac 9a       	sbi	0x15, 4	; 21
+ 208:	01 c0       	rjmp	.+2      	; 0x20c <TM1637_write_byte+0x16>
+ 20a:	ac 98       	cbi	0x15, 4	; 21
+ 20c:	ad 9a       	sbi	0x15, 5	; 21
+ 20e:	93 2f       	mov	r25, r19
+ 210:	9a 95       	dec	r25
+ 212:	f1 f7       	brne	.-4      	; 0x210 <TM1637_write_byte+0x1a>
+ 214:	2f 5f       	subi	r18, 0xFF	; 255
+ 216:	28 30       	cpi	r18, 0x08	; 8
+ 218:	11 f0       	breq	.+4      	; 0x21e <TM1637_write_byte+0x28>
+ 21a:	86 95       	lsr	r24
+ 21c:	ee cf       	rjmp	.-36     	; 0x1fa <TM1637_write_byte+0x4>
+ 21e:	ad 98       	cbi	0x15, 5	; 21
+ 220:	a4 98       	cbi	0x14, 4	; 20
+ 222:	ac 9a       	sbi	0x15, 4	; 21
+ 224:	8d e0       	ldi	r24, 0x0D	; 13
+ 226:	8a 95       	dec	r24
+ 228:	f1 f7       	brne	.-4      	; 0x226 <TM1637_write_byte+0x30>
+ 22a:	20 e0       	ldi	r18, 0x00	; 0
+ 22c:	9c 9b       	sbis	0x13, 4	; 19
+ 22e:	03 c0       	rjmp	.+6      	; 0x236 <TM1637_write_byte+0x40>
+ 230:	21 e0       	ldi	r18, 0x01	; 1
+ 232:	a4 9a       	sbi	0x14, 4	; 20
+ 234:	ac 98       	cbi	0x15, 4	; 21
+ 236:	8d e0       	ldi	r24, 0x0D	; 13
+ 238:	98 2f       	mov	r25, r24
+ 23a:	9a 95       	dec	r25
+ 23c:	f1 f7       	brne	.-4      	; 0x23a <TM1637_write_byte+0x44>
+ 23e:	ad 9a       	sbi	0x15, 5	; 21
+ 240:	98 2f       	mov	r25, r24
+ 242:	9a 95       	dec	r25
+ 244:	f1 f7       	brne	.-4      	; 0x242 <TM1637_write_byte+0x4c>
+ 246:	ad 98       	cbi	0x15, 5	; 21
+ 248:	8a 95       	dec	r24
+ 24a:	f1 f7       	brne	.-4      	; 0x248 <TM1637_write_byte+0x52>
+ 24c:	a4 9a       	sbi	0x14, 4	; 20
+ 24e:	82 2f       	mov	r24, r18
+ 250:	08 95       	ret
 
-00000168 <TM1637_display_segments>:
- 168:	0f 93       	push	r16
- 16a:	1f 93       	push	r17
- 16c:	18 2f       	mov	r17, r24
- 16e:	06 2f       	mov	r16, r22
- 170:	84 e4       	ldi	r24, 0x44	; 68
- 172:	d1 df       	rcall	.-94     	; 0x116 <TM1637_send_command>
- 174:	ac 9a       	sbi	0x15, 4	; 21
- 176:	ad 9a       	sbi	0x15, 5	; 21
- 178:	8d e0       	ldi	r24, 0x0D	; 13
- 17a:	8a 95       	dec	r24
- 17c:	f1 f7       	brne	.-4      	; 0x17a <TM1637_display_segments+0x12>
- 17e:	ac 98       	cbi	0x15, 4	; 21
- 180:	13 70       	andi	r17, 0x03	; 3
- 182:	81 2f       	mov	r24, r17
- 184:	80 6c       	ori	r24, 0xC0	; 192
- 186:	99 df       	rcall	.-206    	; 0xba <TM1637_write_byte>
- 188:	80 2f       	mov	r24, r16
- 18a:	97 df       	rcall	.-210    	; 0xba <TM1637_write_byte>
- 18c:	88 df       	rcall	.-240    	; 0x9e <TM1637_stop>
- 18e:	1f 91       	pop	r17
- 190:	0f 91       	pop	r16
- 192:	08 95       	ret
+00000252 <TM1637_send_command>:
+ 252:	1f 93       	push	r17
+ 254:	ac 9a       	sbi	0x15, 4	; 21
+ 256:	ad 9a       	sbi	0x15, 5	; 21
+ 258:	9d e0       	ldi	r25, 0x0D	; 13
+ 25a:	9a 95       	dec	r25
+ 25c:	f1 f7       	brne	.-4      	; 0x25a <TM1637_send_command+0x8>
+ 25e:	ac 98       	cbi	0x15, 4	; 21
+ 260:	ca df       	rcall	.-108    	; 0x1f6 <TM1637_write_byte>
+ 262:	18 2f       	mov	r17, r24
+ 264:	ba df       	rcall	.-140    	; 0x1da <TM1637_stop>
+ 266:	81 2f       	mov	r24, r17
+ 268:	1f 91       	pop	r17
+ 26a:	08 95       	ret
 
-00000194 <TM1637_clear>:
- 194:	80 e0       	ldi	r24, 0x00	; 0
- 196:	60 e0       	ldi	r22, 0x00	; 0
- 198:	e7 df       	rcall	.-50     	; 0x168 <TM1637_display_segments>
- 19a:	81 e0       	ldi	r24, 0x01	; 1
- 19c:	60 e0       	ldi	r22, 0x00	; 0
- 19e:	e4 df       	rcall	.-56     	; 0x168 <TM1637_display_segments>
- 1a0:	82 e0       	ldi	r24, 0x02	; 2
- 1a2:	60 e0       	ldi	r22, 0x00	; 0
- 1a4:	e1 df       	rcall	.-62     	; 0x168 <TM1637_display_segments>
- 1a6:	83 e0       	ldi	r24, 0x03	; 3
- 1a8:	60 e0       	ldi	r22, 0x00	; 0
- 1aa:	de df       	rcall	.-68     	; 0x168 <TM1637_display_segments>
- 1ac:	08 95       	ret
+0000026c <TM1637_send_config>:
+ 26c:	81 11       	cpse	r24, r1
+ 26e:	88 e0       	ldi	r24, 0x08	; 8
+ 270:	68 30       	cpi	r22, 0x08	; 8
+ 272:	08 f0       	brcs	.+2      	; 0x276 <TM1637_send_config+0xa>
+ 274:	67 e0       	ldi	r22, 0x07	; 7
+ 276:	86 2b       	or	r24, r22
+ 278:	80 93 70 00 	sts	0x0070, r24
+ 27c:	80 68       	ori	r24, 0x80	; 128
+ 27e:	e9 df       	rcall	.-46     	; 0x252 <TM1637_send_command>
+ 280:	08 95       	ret
 
-000001ae <TM1637_display_colon>:
- 1ae:	90 91 6a 00 	lds	r25, 0x006A
- 1b2:	88 23       	and	r24, r24
- 1b4:	11 f0       	breq	.+4      	; 0x1ba <TM1637_display_colon+0xc>
- 1b6:	90 68       	ori	r25, 0x80	; 128
- 1b8:	01 c0       	rjmp	.+2      	; 0x1bc <TM1637_display_colon+0xe>
- 1ba:	9f 77       	andi	r25, 0x7F	; 127
- 1bc:	90 93 6a 00 	sts	0x006A, r25
- 1c0:	81 e0       	ldi	r24, 0x01	; 1
- 1c2:	60 91 6a 00 	lds	r22, 0x006A
- 1c6:	d0 df       	rcall	.-96     	; 0x168 <TM1637_display_segments>
- 1c8:	08 95       	ret
+00000282 <TM1637_set_brightness>:
+ 282:	90 91 70 00 	lds	r25, 0x0070
+ 286:	68 2f       	mov	r22, r24
+ 288:	67 70       	andi	r22, 0x07	; 7
+ 28a:	89 2f       	mov	r24, r25
+ 28c:	88 70       	andi	r24, 0x08	; 8
+ 28e:	ee df       	rcall	.-36     	; 0x26c <TM1637_send_config>
+ 290:	08 95       	ret
 
-000001ca <TM1637_display_char>:
- 1ca:	98 2f       	mov	r25, r24
- 1cc:	86 2f       	mov	r24, r22
- 1ce:	80 53       	subi	r24, 0x30	; 48
- 1d0:	8a 30       	cpi	r24, 0x0A	; 10
- 1d2:	18 f4       	brcc	.+6      	; 0x1da <TM1637_display_char+0x10>
- 1d4:	e0 ed       	ldi	r30, 0xD0	; 208
- 1d6:	ff ef       	ldi	r31, 0xFF	; 255
- 1d8:	02 c0       	rjmp	.+4      	; 0x1de <TM1637_display_char+0x14>
- 1da:	e0 e0       	ldi	r30, 0x00	; 0
- 1dc:	f0 e0       	ldi	r31, 0x00	; 0
- 1de:	86 2f       	mov	r24, r22
- 1e0:	81 56       	subi	r24, 0x61	; 97
- 1e2:	8a 31       	cpi	r24, 0x1A	; 26
- 1e4:	10 f4       	brcc	.+4      	; 0x1ea <TM1637_display_char+0x20>
- 1e6:	e9 ea       	ldi	r30, 0xA9	; 169
- 1e8:	ff ef       	ldi	r31, 0xFF	; 255
- 1ea:	86 2f       	mov	r24, r22
- 1ec:	81 54       	subi	r24, 0x41	; 65
- 1ee:	8a 31       	cpi	r24, 0x1A	; 26
- 1f0:	10 f4       	brcc	.+4      	; 0x1f6 <TM1637_display_char+0x2c>
- 1f2:	e9 ec       	ldi	r30, 0xC9	; 201
- 1f4:	ff ef       	ldi	r31, 0xFF	; 255
- 1f6:	6c 32       	cpi	r22, 0x2C	; 44
- 1f8:	b1 f0       	breq	.+44     	; 0x226 <TM1637_display_char+0x5c>
- 1fa:	6d 32       	cpi	r22, 0x2D	; 45
- 1fc:	28 f4       	brcc	.+10     	; 0x208 <TM1637_display_char+0x3e>
- 1fe:	60 32       	cpi	r22, 0x20	; 32
- 200:	c1 f0       	breq	.+48     	; 0x232 <TM1637_display_char+0x68>
- 202:	67 32       	cpi	r22, 0x27	; 39
- 204:	c1 f4       	brne	.+48     	; 0x236 <TM1637_display_char+0x6c>
- 206:	0c c0       	rjmp	.+24     	; 0x220 <TM1637_display_char+0x56>
- 208:	6d 33       	cpi	r22, 0x3D	; 61
- 20a:	39 f0       	breq	.+14     	; 0x21a <TM1637_display_char+0x50>
- 20c:	6f 35       	cpi	r22, 0x5F	; 95
- 20e:	71 f0       	breq	.+28     	; 0x22c <TM1637_display_char+0x62>
- 210:	6d 32       	cpi	r22, 0x2D	; 45
- 212:	89 f4       	brne	.+34     	; 0x236 <TM1637_display_char+0x6c>
- 214:	e7 ef       	ldi	r30, 0xF7	; 247
- 216:	ff ef       	ldi	r31, 0xFF	; 255
- 218:	0e c0       	rjmp	.+28     	; 0x236 <TM1637_display_char+0x6c>
- 21a:	e8 ee       	ldi	r30, 0xE8	; 232
- 21c:	ff ef       	ldi	r31, 0xFF	; 255
- 21e:	0b c0       	rjmp	.+22     	; 0x236 <TM1637_display_char+0x6c>
- 220:	ef ef       	ldi	r30, 0xFF	; 255
- 222:	ff ef       	ldi	r31, 0xFF	; 255
- 224:	08 c0       	rjmp	.+16     	; 0x236 <TM1637_display_char+0x6c>
- 226:	eb ef       	ldi	r30, 0xFB	; 251
- 228:	ff ef       	ldi	r31, 0xFF	; 255
- 22a:	05 c0       	rjmp	.+10     	; 0x236 <TM1637_display_char+0x6c>
- 22c:	e9 ec       	ldi	r30, 0xC9	; 201
- 22e:	ff ef       	ldi	r31, 0xFF	; 255
- 230:	02 c0       	rjmp	.+4      	; 0x236 <TM1637_display_char+0x6c>
- 232:	e9 e0       	ldi	r30, 0x09	; 9
- 234:	f0 e0       	ldi	r31, 0x00	; 0
- 236:	e6 0f       	add	r30, r22
- 238:	f1 1d       	adc	r31, r1
- 23a:	ea 5d       	subi	r30, 0xDA	; 218
- 23c:	ff 4f       	sbci	r31, 0xFF	; 255
- 23e:	84 91       	lpm	r24, Z+
- 240:	91 30       	cpi	r25, 0x01	; 1
- 242:	11 f0       	breq	.+4      	; 0x248 <TM1637_display_char+0x7e>
- 244:	68 2f       	mov	r22, r24
- 246:	06 c0       	rjmp	.+12     	; 0x254 <TM1637_display_char+0x8a>
- 248:	60 91 6a 00 	lds	r22, 0x006A
- 24c:	60 78       	andi	r22, 0x80	; 128
- 24e:	68 2b       	or	r22, r24
- 250:	60 93 6a 00 	sts	0x006A, r22
- 254:	89 2f       	mov	r24, r25
- 256:	88 df       	rcall	.-240    	; 0x168 <TM1637_display_segments>
- 258:	08 95       	ret
-
-0000025a <TM1637_display_c_str>:
- 25a:	ff 92       	push	r15
- 25c:	0f 93       	push	r16
- 25e:	1f 93       	push	r17
- 260:	cf 93       	push	r28
- 262:	df 93       	push	r29
- 264:	8c 01       	movw	r16, r24
- 266:	84 e0       	ldi	r24, 0x04	; 4
- 268:	f8 2e       	mov	r15, r24
- 26a:	c0 e0       	ldi	r28, 0x00	; 0
- 26c:	d0 e0       	ldi	r29, 0x00	; 0
- 26e:	8c 2f       	mov	r24, r28
- 270:	f8 01       	movw	r30, r16
- 272:	ec 0f       	add	r30, r28
- 274:	fd 1f       	adc	r31, r29
- 276:	60 81       	ld	r22, Z
- 278:	66 23       	and	r22, r22
- 27a:	19 f0       	breq	.+6      	; 0x282 <TM1637_display_c_str+0x28>
- 27c:	cf 15       	cp	r28, r15
- 27e:	18 f0       	brcs	.+6      	; 0x286 <TM1637_display_c_str+0x2c>
- 280:	01 c0       	rjmp	.+2      	; 0x284 <TM1637_display_c_str+0x2a>
- 282:	fc 2e       	mov	r15, r28
- 284:	60 e0       	ldi	r22, 0x00	; 0
- 286:	a1 df       	rcall	.-190    	; 0x1ca <TM1637_display_char>
- 288:	21 96       	adiw	r28, 0x01	; 1
- 28a:	c4 30       	cpi	r28, 0x04	; 4
- 28c:	d1 05       	cpc	r29, r1
- 28e:	79 f7       	brne	.-34     	; 0x26e <TM1637_display_c_str+0x14>
- 290:	df 91       	pop	r29
- 292:	cf 91       	pop	r28
- 294:	1f 91       	pop	r17
- 296:	0f 91       	pop	r16
- 298:	ff 90       	pop	r15
+00000292 <TM1637_enable>:
+ 292:	60 91 70 00 	lds	r22, 0x0070
+ 296:	67 70       	andi	r22, 0x07	; 7
+ 298:	e9 df       	rcall	.-46     	; 0x26c <TM1637_send_config>
  29a:	08 95       	ret
 
-0000029c <TM1637_display_integer>:
- 29c:	8f 92       	push	r8
- 29e:	9f 92       	push	r9
- 2a0:	bf 92       	push	r11
- 2a2:	cf 92       	push	r12
- 2a4:	df 92       	push	r13
- 2a6:	ef 92       	push	r14
- 2a8:	ff 92       	push	r15
- 2aa:	0f 93       	push	r16
- 2ac:	df 93       	push	r29
- 2ae:	cf 93       	push	r28
- 2b0:	cd b7       	in	r28, 0x3d	; 61
- 2b2:	de b7       	in	r29, 0x3e	; 62
- 2b4:	27 97       	sbiw	r28, 0x07	; 7
- 2b6:	0f b6       	in	r0, 0x3f	; 63
- 2b8:	f8 94       	cli
- 2ba:	de bf       	out	0x3e, r29	; 62
- 2bc:	0f be       	out	0x3f, r0	; 63
- 2be:	cd bf       	out	0x3d, r28	; 61
- 2c0:	6b 01       	movw	r12, r22
- 2c2:	7c 01       	movw	r14, r24
- 2c4:	de 01       	movw	r26, r28
- 2c6:	11 96       	adiw	r26, 0x01	; 1
- 2c8:	eb e6       	ldi	r30, 0x6B	; 107
- 2ca:	f0 e0       	ldi	r31, 0x00	; 0
- 2cc:	85 e0       	ldi	r24, 0x05	; 5
- 2ce:	01 90       	ld	r0, Z+
- 2d0:	0d 92       	st	X+, r0
- 2d2:	81 50       	subi	r24, 0x01	; 1
- 2d4:	e1 f7       	brne	.-8      	; 0x2ce <TM1637_display_integer+0x32>
- 2d6:	80 e1       	ldi	r24, 0x10	; 16
- 2d8:	c8 16       	cp	r12, r24
- 2da:	87 e2       	ldi	r24, 0x27	; 39
- 2dc:	d8 06       	cpc	r13, r24
- 2de:	80 e0       	ldi	r24, 0x00	; 0
- 2e0:	e8 06       	cpc	r14, r24
- 2e2:	80 e0       	ldi	r24, 0x00	; 0
- 2e4:	f8 06       	cpc	r15, r24
- 2e6:	1c f0       	brlt	.+6      	; 0x2ee <TM1637_display_integer+0x52>
- 2e8:	80 e6       	ldi	r24, 0x60	; 96
- 2ea:	90 e0       	ldi	r25, 0x00	; 0
- 2ec:	4a c0       	rjmp	.+148    	; 0x382 <TM1637_display_integer+0xe6>
- 2ee:	99 e1       	ldi	r25, 0x19	; 25
- 2f0:	c9 16       	cp	r12, r25
- 2f2:	9c ef       	ldi	r25, 0xFC	; 252
- 2f4:	d9 06       	cpc	r13, r25
- 2f6:	9f ef       	ldi	r25, 0xFF	; 255
- 2f8:	e9 06       	cpc	r14, r25
- 2fa:	9f ef       	ldi	r25, 0xFF	; 255
- 2fc:	f9 06       	cpc	r15, r25
- 2fe:	1c f4       	brge	.+6      	; 0x306 <TM1637_display_integer+0x6a>
- 300:	85 e6       	ldi	r24, 0x65	; 101
- 302:	90 e0       	ldi	r25, 0x00	; 0
- 304:	3e c0       	rjmp	.+124    	; 0x382 <TM1637_display_integer+0xe6>
- 306:	f7 fc       	sbrc	r15, 7
- 308:	02 c0       	rjmp	.+4      	; 0x30e <TM1637_display_integer+0x72>
- 30a:	bb 24       	eor	r11, r11
- 30c:	0a c0       	rjmp	.+20     	; 0x322 <TM1637_display_integer+0x86>
- 30e:	f0 94       	com	r15
- 310:	e0 94       	com	r14
- 312:	d0 94       	com	r13
- 314:	c0 94       	com	r12
- 316:	c1 1c       	adc	r12, r1
- 318:	d1 1c       	adc	r13, r1
- 31a:	e1 1c       	adc	r14, r1
- 31c:	f1 1c       	adc	r15, r1
- 31e:	bb 24       	eor	r11, r11
- 320:	b3 94       	inc	r11
- 322:	03 e0       	ldi	r16, 0x03	; 3
- 324:	4e 01       	movw	r8, r28
- 326:	08 94       	sec
- 328:	81 1c       	adc	r8, r1
- 32a:	91 1c       	adc	r9, r1
- 32c:	1c c0       	rjmp	.+56     	; 0x366 <TM1637_display_integer+0xca>
- 32e:	f4 01       	movw	r30, r8
- 330:	e0 0f       	add	r30, r16
- 332:	f1 1d       	adc	r31, r1
- 334:	ff 83       	std	Y+7, r31	; 0x07
- 336:	ee 83       	std	Y+6, r30	; 0x06
- 338:	c7 01       	movw	r24, r14
- 33a:	b6 01       	movw	r22, r12
- 33c:	2a e0       	ldi	r18, 0x0A	; 10
- 33e:	30 e0       	ldi	r19, 0x00	; 0
- 340:	40 e0       	ldi	r20, 0x00	; 0
- 342:	50 e0       	ldi	r21, 0x00	; 0
- 344:	30 d0       	rcall	.+96     	; 0x3a6 <__divmodsi4>
- 346:	60 5d       	subi	r22, 0xD0	; 208
- 348:	ee 81       	ldd	r30, Y+6	; 0x06
- 34a:	ff 81       	ldd	r31, Y+7	; 0x07
- 34c:	60 83       	st	Z, r22
- 34e:	c7 01       	movw	r24, r14
- 350:	b6 01       	movw	r22, r12
- 352:	2a e0       	ldi	r18, 0x0A	; 10
- 354:	30 e0       	ldi	r19, 0x00	; 0
- 356:	40 e0       	ldi	r20, 0x00	; 0
- 358:	50 e0       	ldi	r21, 0x00	; 0
- 35a:	25 d0       	rcall	.+74     	; 0x3a6 <__divmodsi4>
- 35c:	c9 01       	movw	r24, r18
- 35e:	da 01       	movw	r26, r20
- 360:	6c 01       	movw	r12, r24
- 362:	7d 01       	movw	r14, r26
- 364:	01 50       	subi	r16, 0x01	; 1
- 366:	c1 14       	cp	r12, r1
- 368:	d1 04       	cpc	r13, r1
- 36a:	e1 04       	cpc	r14, r1
- 36c:	f1 04       	cpc	r15, r1
- 36e:	f9 f6       	brne	.-66     	; 0x32e <TM1637_display_integer+0x92>
- 370:	bb 20       	and	r11, r11
- 372:	29 f0       	breq	.+10     	; 0x37e <TM1637_display_integer+0xe2>
- 374:	fe 01       	movw	r30, r28
- 376:	e0 0f       	add	r30, r16
- 378:	f1 1d       	adc	r31, r1
- 37a:	8d e2       	ldi	r24, 0x2D	; 45
- 37c:	81 83       	std	Z+1, r24	; 0x01
- 37e:	ce 01       	movw	r24, r28
- 380:	01 96       	adiw	r24, 0x01	; 1
- 382:	6b df       	rcall	.-298    	; 0x25a <TM1637_display_c_str>
- 384:	27 96       	adiw	r28, 0x07	; 7
- 386:	0f b6       	in	r0, 0x3f	; 63
- 388:	f8 94       	cli
- 38a:	de bf       	out	0x3e, r29	; 62
- 38c:	0f be       	out	0x3f, r0	; 63
- 38e:	cd bf       	out	0x3d, r28	; 61
- 390:	cf 91       	pop	r28
- 392:	df 91       	pop	r29
- 394:	0f 91       	pop	r16
- 396:	ff 90       	pop	r15
- 398:	ef 90       	pop	r14
- 39a:	df 90       	pop	r13
- 39c:	cf 90       	pop	r12
- 39e:	bf 90       	pop	r11
- 3a0:	9f 90       	pop	r9
- 3a2:	8f 90       	pop	r8
- 3a4:	08 95       	ret
+0000029c <TM1637_display_segments>:
+ 29c:	ff 92       	push	r15
+ 29e:	0f 93       	push	r16
+ 2a0:	1f 93       	push	r17
+ 2a2:	18 2f       	mov	r17, r24
+ 2a4:	f6 2e       	mov	r15, r22
+ 2a6:	84 e4       	ldi	r24, 0x44	; 68
+ 2a8:	d4 df       	rcall	.-88     	; 0x252 <TM1637_send_command>
+ 2aa:	ac 9a       	sbi	0x15, 4	; 21
+ 2ac:	ad 9a       	sbi	0x15, 5	; 21
+ 2ae:	8d e0       	ldi	r24, 0x0D	; 13
+ 2b0:	8a 95       	dec	r24
+ 2b2:	f1 f7       	brne	.-4      	; 0x2b0 <TM1637_display_segments+0x14>
+ 2b4:	ac 98       	cbi	0x15, 4	; 21
+ 2b6:	13 70       	andi	r17, 0x03	; 3
+ 2b8:	81 2f       	mov	r24, r17
+ 2ba:	80 6c       	ori	r24, 0xC0	; 192
+ 2bc:	9c df       	rcall	.-200    	; 0x1f6 <TM1637_write_byte>
+ 2be:	08 2f       	mov	r16, r24
+ 2c0:	8f 2d       	mov	r24, r15
+ 2c2:	99 df       	rcall	.-206    	; 0x1f6 <TM1637_write_byte>
+ 2c4:	18 2f       	mov	r17, r24
+ 2c6:	89 df       	rcall	.-238    	; 0x1da <TM1637_stop>
+ 2c8:	81 2f       	mov	r24, r17
+ 2ca:	80 23       	and	r24, r16
+ 2cc:	1f 91       	pop	r17
+ 2ce:	0f 91       	pop	r16
+ 2d0:	ff 90       	pop	r15
+ 2d2:	08 95       	ret
 
-000003a6 <__divmodsi4>:
- 3a6:	97 fb       	bst	r25, 7
- 3a8:	09 2e       	mov	r0, r25
- 3aa:	05 26       	eor	r0, r21
- 3ac:	0e d0       	rcall	.+28     	; 0x3ca <__divmodsi4_neg1>
- 3ae:	57 fd       	sbrc	r21, 7
- 3b0:	04 d0       	rcall	.+8      	; 0x3ba <__divmodsi4_neg2>
- 3b2:	14 d0       	rcall	.+40     	; 0x3dc <__udivmodsi4>
- 3b4:	0a d0       	rcall	.+20     	; 0x3ca <__divmodsi4_neg1>
- 3b6:	00 1c       	adc	r0, r0
- 3b8:	38 f4       	brcc	.+14     	; 0x3c8 <__divmodsi4_exit>
+000002d4 <TM1637_clear>:
+ 2d4:	80 e0       	ldi	r24, 0x00	; 0
+ 2d6:	60 e0       	ldi	r22, 0x00	; 0
+ 2d8:	e1 df       	rcall	.-62     	; 0x29c <TM1637_display_segments>
+ 2da:	81 e0       	ldi	r24, 0x01	; 1
+ 2dc:	60 e0       	ldi	r22, 0x00	; 0
+ 2de:	de df       	rcall	.-68     	; 0x29c <TM1637_display_segments>
+ 2e0:	82 e0       	ldi	r24, 0x02	; 2
+ 2e2:	60 e0       	ldi	r22, 0x00	; 0
+ 2e4:	db df       	rcall	.-74     	; 0x29c <TM1637_display_segments>
+ 2e6:	83 e0       	ldi	r24, 0x03	; 3
+ 2e8:	60 e0       	ldi	r22, 0x00	; 0
+ 2ea:	d8 df       	rcall	.-80     	; 0x29c <TM1637_display_segments>
+ 2ec:	08 95       	ret
 
-000003ba <__divmodsi4_neg2>:
- 3ba:	50 95       	com	r21
- 3bc:	40 95       	com	r20
- 3be:	30 95       	com	r19
- 3c0:	21 95       	neg	r18
- 3c2:	3f 4f       	sbci	r19, 0xFF	; 255
- 3c4:	4f 4f       	sbci	r20, 0xFF	; 255
- 3c6:	5f 4f       	sbci	r21, 0xFF	; 255
+000002ee <TM1637_display_colon>:
+ 2ee:	90 91 6a 00 	lds	r25, 0x006A
+ 2f2:	88 23       	and	r24, r24
+ 2f4:	11 f0       	breq	.+4      	; 0x2fa <TM1637_display_colon+0xc>
+ 2f6:	90 68       	ori	r25, 0x80	; 128
+ 2f8:	01 c0       	rjmp	.+2      	; 0x2fc <TM1637_display_colon+0xe>
+ 2fa:	9f 77       	andi	r25, 0x7F	; 127
+ 2fc:	90 93 6a 00 	sts	0x006A, r25
+ 300:	81 e0       	ldi	r24, 0x01	; 1
+ 302:	60 91 6a 00 	lds	r22, 0x006A
+ 306:	ca df       	rcall	.-108    	; 0x29c <TM1637_display_segments>
+ 308:	08 95       	ret
 
-000003c8 <__divmodsi4_exit>:
- 3c8:	08 95       	ret
+0000030a <TM1637_init>:
+ 30a:	0f 93       	push	r16
+ 30c:	1f 93       	push	r17
+ 30e:	18 2f       	mov	r17, r24
+ 310:	06 2f       	mov	r16, r22
+ 312:	84 b3       	in	r24, 0x14	; 20
+ 314:	80 63       	ori	r24, 0x30	; 48
+ 316:	84 bb       	out	0x14, r24	; 20
+ 318:	85 b3       	in	r24, 0x15	; 21
+ 31a:	8f 7c       	andi	r24, 0xCF	; 207
+ 31c:	85 bb       	out	0x15, r24	; 21
+ 31e:	80 e0       	ldi	r24, 0x00	; 0
+ 320:	e6 df       	rcall	.-52     	; 0x2ee <TM1637_display_colon>
+ 322:	81 2f       	mov	r24, r17
+ 324:	60 2f       	mov	r22, r16
+ 326:	a2 df       	rcall	.-188    	; 0x26c <TM1637_send_config>
+ 328:	1f 91       	pop	r17
+ 32a:	0f 91       	pop	r16
+ 32c:	08 95       	ret
 
-000003ca <__divmodsi4_neg1>:
- 3ca:	f6 f7       	brtc	.-4      	; 0x3c8 <__divmodsi4_exit>
- 3cc:	90 95       	com	r25
- 3ce:	80 95       	com	r24
- 3d0:	70 95       	com	r23
- 3d2:	61 95       	neg	r22
- 3d4:	7f 4f       	sbci	r23, 0xFF	; 255
- 3d6:	8f 4f       	sbci	r24, 0xFF	; 255
- 3d8:	9f 4f       	sbci	r25, 0xFF	; 255
- 3da:	08 95       	ret
+0000032e <TM1637_display_char>:
+ 32e:	98 2f       	mov	r25, r24
+ 330:	86 2f       	mov	r24, r22
+ 332:	80 53       	subi	r24, 0x30	; 48
+ 334:	8a 30       	cpi	r24, 0x0A	; 10
+ 336:	18 f4       	brcc	.+6      	; 0x33e <TM1637_display_char+0x10>
+ 338:	e0 ed       	ldi	r30, 0xD0	; 208
+ 33a:	ff ef       	ldi	r31, 0xFF	; 255
+ 33c:	02 c0       	rjmp	.+4      	; 0x342 <TM1637_display_char+0x14>
+ 33e:	e0 e0       	ldi	r30, 0x00	; 0
+ 340:	f0 e0       	ldi	r31, 0x00	; 0
+ 342:	86 2f       	mov	r24, r22
+ 344:	81 56       	subi	r24, 0x61	; 97
+ 346:	8a 31       	cpi	r24, 0x1A	; 26
+ 348:	10 f4       	brcc	.+4      	; 0x34e <TM1637_display_char+0x20>
+ 34a:	e9 ea       	ldi	r30, 0xA9	; 169
+ 34c:	ff ef       	ldi	r31, 0xFF	; 255
+ 34e:	86 2f       	mov	r24, r22
+ 350:	81 54       	subi	r24, 0x41	; 65
+ 352:	8a 31       	cpi	r24, 0x1A	; 26
+ 354:	10 f4       	brcc	.+4      	; 0x35a <TM1637_display_char+0x2c>
+ 356:	e9 ec       	ldi	r30, 0xC9	; 201
+ 358:	ff ef       	ldi	r31, 0xFF	; 255
+ 35a:	6c 32       	cpi	r22, 0x2C	; 44
+ 35c:	b1 f0       	breq	.+44     	; 0x38a <TM1637_display_char+0x5c>
+ 35e:	6d 32       	cpi	r22, 0x2D	; 45
+ 360:	28 f4       	brcc	.+10     	; 0x36c <TM1637_display_char+0x3e>
+ 362:	60 32       	cpi	r22, 0x20	; 32
+ 364:	c1 f0       	breq	.+48     	; 0x396 <TM1637_display_char+0x68>
+ 366:	67 32       	cpi	r22, 0x27	; 39
+ 368:	c1 f4       	brne	.+48     	; 0x39a <TM1637_display_char+0x6c>
+ 36a:	0c c0       	rjmp	.+24     	; 0x384 <TM1637_display_char+0x56>
+ 36c:	6d 33       	cpi	r22, 0x3D	; 61
+ 36e:	39 f0       	breq	.+14     	; 0x37e <TM1637_display_char+0x50>
+ 370:	6f 35       	cpi	r22, 0x5F	; 95
+ 372:	71 f0       	breq	.+28     	; 0x390 <TM1637_display_char+0x62>
+ 374:	6d 32       	cpi	r22, 0x2D	; 45
+ 376:	89 f4       	brne	.+34     	; 0x39a <TM1637_display_char+0x6c>
+ 378:	e7 ef       	ldi	r30, 0xF7	; 247
+ 37a:	ff ef       	ldi	r31, 0xFF	; 255
+ 37c:	0e c0       	rjmp	.+28     	; 0x39a <TM1637_display_char+0x6c>
+ 37e:	e8 ee       	ldi	r30, 0xE8	; 232
+ 380:	ff ef       	ldi	r31, 0xFF	; 255
+ 382:	0b c0       	rjmp	.+22     	; 0x39a <TM1637_display_char+0x6c>
+ 384:	ef ef       	ldi	r30, 0xFF	; 255
+ 386:	ff ef       	ldi	r31, 0xFF	; 255
+ 388:	08 c0       	rjmp	.+16     	; 0x39a <TM1637_display_char+0x6c>
+ 38a:	eb ef       	ldi	r30, 0xFB	; 251
+ 38c:	ff ef       	ldi	r31, 0xFF	; 255
+ 38e:	05 c0       	rjmp	.+10     	; 0x39a <TM1637_display_char+0x6c>
+ 390:	e9 ec       	ldi	r30, 0xC9	; 201
+ 392:	ff ef       	ldi	r31, 0xFF	; 255
+ 394:	02 c0       	rjmp	.+4      	; 0x39a <TM1637_display_char+0x6c>
+ 396:	e9 e0       	ldi	r30, 0x09	; 9
+ 398:	f0 e0       	ldi	r31, 0x00	; 0
+ 39a:	e6 0f       	add	r30, r22
+ 39c:	f1 1d       	adc	r31, r1
+ 39e:	ea 5d       	subi	r30, 0xDA	; 218
+ 3a0:	ff 4f       	sbci	r31, 0xFF	; 255
+ 3a2:	84 91       	lpm	r24, Z+
+ 3a4:	91 30       	cpi	r25, 0x01	; 1
+ 3a6:	11 f0       	breq	.+4      	; 0x3ac <TM1637_display_char+0x7e>
+ 3a8:	68 2f       	mov	r22, r24
+ 3aa:	06 c0       	rjmp	.+12     	; 0x3b8 <TM1637_display_char+0x8a>
+ 3ac:	60 91 6a 00 	lds	r22, 0x006A
+ 3b0:	60 78       	andi	r22, 0x80	; 128
+ 3b2:	68 2b       	or	r22, r24
+ 3b4:	60 93 6a 00 	sts	0x006A, r22
+ 3b8:	89 2f       	mov	r24, r25
+ 3ba:	70 df       	rcall	.-288    	; 0x29c <TM1637_display_segments>
+ 3bc:	08 95       	ret
 
-000003dc <__udivmodsi4>:
- 3dc:	a1 e2       	ldi	r26, 0x21	; 33
- 3de:	1a 2e       	mov	r1, r26
- 3e0:	aa 1b       	sub	r26, r26
- 3e2:	bb 1b       	sub	r27, r27
- 3e4:	fd 01       	movw	r30, r26
- 3e6:	0d c0       	rjmp	.+26     	; 0x402 <__udivmodsi4_ep>
+000003be <TM1637_display_c_str>:
+ 3be:	ef 92       	push	r14
+ 3c0:	ff 92       	push	r15
+ 3c2:	0f 93       	push	r16
+ 3c4:	1f 93       	push	r17
+ 3c6:	cf 93       	push	r28
+ 3c8:	df 93       	push	r29
+ 3ca:	7c 01       	movw	r14, r24
+ 3cc:	11 e0       	ldi	r17, 0x01	; 1
+ 3ce:	04 e0       	ldi	r16, 0x04	; 4
+ 3d0:	c0 e0       	ldi	r28, 0x00	; 0
+ 3d2:	d0 e0       	ldi	r29, 0x00	; 0
+ 3d4:	8c 2f       	mov	r24, r28
+ 3d6:	f7 01       	movw	r30, r14
+ 3d8:	ec 0f       	add	r30, r28
+ 3da:	fd 1f       	adc	r31, r29
+ 3dc:	60 81       	ld	r22, Z
+ 3de:	66 23       	and	r22, r22
+ 3e0:	29 f0       	breq	.+10     	; 0x3ec <TM1637_display_c_str+0x2e>
+ 3e2:	c0 17       	cp	r28, r16
+ 3e4:	20 f4       	brcc	.+8      	; 0x3ee <TM1637_display_c_str+0x30>
+ 3e6:	a3 df       	rcall	.-186    	; 0x32e <TM1637_display_char>
+ 3e8:	18 23       	and	r17, r24
+ 3ea:	04 c0       	rjmp	.+8      	; 0x3f4 <TM1637_display_c_str+0x36>
+ 3ec:	0c 2f       	mov	r16, r28
+ 3ee:	60 e0       	ldi	r22, 0x00	; 0
+ 3f0:	9e df       	rcall	.-196    	; 0x32e <TM1637_display_char>
+ 3f2:	18 2f       	mov	r17, r24
+ 3f4:	21 96       	adiw	r28, 0x01	; 1
+ 3f6:	c4 30       	cpi	r28, 0x04	; 4
+ 3f8:	d1 05       	cpc	r29, r1
+ 3fa:	61 f7       	brne	.-40     	; 0x3d4 <TM1637_display_c_str+0x16>
+ 3fc:	81 2f       	mov	r24, r17
+ 3fe:	df 91       	pop	r29
+ 400:	cf 91       	pop	r28
+ 402:	1f 91       	pop	r17
+ 404:	0f 91       	pop	r16
+ 406:	ff 90       	pop	r15
+ 408:	ef 90       	pop	r14
+ 40a:	08 95       	ret
 
-000003e8 <__udivmodsi4_loop>:
- 3e8:	aa 1f       	adc	r26, r26
- 3ea:	bb 1f       	adc	r27, r27
- 3ec:	ee 1f       	adc	r30, r30
- 3ee:	ff 1f       	adc	r31, r31
- 3f0:	a2 17       	cp	r26, r18
- 3f2:	b3 07       	cpc	r27, r19
- 3f4:	e4 07       	cpc	r30, r20
- 3f6:	f5 07       	cpc	r31, r21
- 3f8:	20 f0       	brcs	.+8      	; 0x402 <__udivmodsi4_ep>
- 3fa:	a2 1b       	sub	r26, r18
- 3fc:	b3 0b       	sbc	r27, r19
- 3fe:	e4 0b       	sbc	r30, r20
- 400:	f5 0b       	sbc	r31, r21
+0000040c <TM1637_display_integer>:
+ 40c:	9f 92       	push	r9
+ 40e:	af 92       	push	r10
+ 410:	bf 92       	push	r11
+ 412:	cf 92       	push	r12
+ 414:	df 92       	push	r13
+ 416:	ef 92       	push	r14
+ 418:	ff 92       	push	r15
+ 41a:	0f 93       	push	r16
+ 41c:	df 93       	push	r29
+ 41e:	cf 93       	push	r28
+ 420:	cd b7       	in	r28, 0x3d	; 61
+ 422:	de b7       	in	r29, 0x3e	; 62
+ 424:	27 97       	sbiw	r28, 0x07	; 7
+ 426:	0f b6       	in	r0, 0x3f	; 63
+ 428:	f8 94       	cli
+ 42a:	de bf       	out	0x3e, r29	; 62
+ 42c:	0f be       	out	0x3f, r0	; 63
+ 42e:	cd bf       	out	0x3d, r28	; 61
+ 430:	6b 01       	movw	r12, r22
+ 432:	7c 01       	movw	r14, r24
+ 434:	de 01       	movw	r26, r28
+ 436:	11 96       	adiw	r26, 0x01	; 1
+ 438:	eb e6       	ldi	r30, 0x6B	; 107
+ 43a:	f0 e0       	ldi	r31, 0x00	; 0
+ 43c:	85 e0       	ldi	r24, 0x05	; 5
+ 43e:	01 90       	ld	r0, Z+
+ 440:	0d 92       	st	X+, r0
+ 442:	81 50       	subi	r24, 0x01	; 1
+ 444:	e1 f7       	brne	.-8      	; 0x43e <TM1637_display_integer+0x32>
+ 446:	80 e1       	ldi	r24, 0x10	; 16
+ 448:	c8 16       	cp	r12, r24
+ 44a:	87 e2       	ldi	r24, 0x27	; 39
+ 44c:	d8 06       	cpc	r13, r24
+ 44e:	80 e0       	ldi	r24, 0x00	; 0
+ 450:	e8 06       	cpc	r14, r24
+ 452:	80 e0       	ldi	r24, 0x00	; 0
+ 454:	f8 06       	cpc	r15, r24
+ 456:	1c f0       	brlt	.+6      	; 0x45e <TM1637_display_integer+0x52>
+ 458:	80 e6       	ldi	r24, 0x60	; 96
+ 45a:	90 e0       	ldi	r25, 0x00	; 0
+ 45c:	51 c0       	rjmp	.+162    	; 0x500 <__stack+0xa1>
+ 45e:	99 e1       	ldi	r25, 0x19	; 25
+ 460:	c9 16       	cp	r12, r25
+ 462:	9c ef       	ldi	r25, 0xFC	; 252
+ 464:	d9 06       	cpc	r13, r25
+ 466:	9f ef       	ldi	r25, 0xFF	; 255
+ 468:	e9 06       	cpc	r14, r25
+ 46a:	9f ef       	ldi	r25, 0xFF	; 255
+ 46c:	f9 06       	cpc	r15, r25
+ 46e:	1c f4       	brge	.+6      	; 0x476 <__stack+0x17>
+ 470:	85 e6       	ldi	r24, 0x65	; 101
+ 472:	90 e0       	ldi	r25, 0x00	; 0
+ 474:	45 c0       	rjmp	.+138    	; 0x500 <__stack+0xa1>
+ 476:	f7 fe       	sbrs	r15, 7
+ 478:	0b c0       	rjmp	.+22     	; 0x490 <__stack+0x31>
+ 47a:	f0 94       	com	r15
+ 47c:	e0 94       	com	r14
+ 47e:	d0 94       	com	r13
+ 480:	c0 94       	com	r12
+ 482:	c1 1c       	adc	r12, r1
+ 484:	d1 1c       	adc	r13, r1
+ 486:	e1 1c       	adc	r14, r1
+ 488:	f1 1c       	adc	r15, r1
+ 48a:	99 24       	eor	r9, r9
+ 48c:	93 94       	inc	r9
+ 48e:	06 c0       	rjmp	.+12     	; 0x49c <__stack+0x3d>
+ 490:	c1 14       	cp	r12, r1
+ 492:	d1 04       	cpc	r13, r1
+ 494:	e1 04       	cpc	r14, r1
+ 496:	f1 04       	cpc	r15, r1
+ 498:	79 f1       	breq	.+94     	; 0x4f8 <__stack+0x99>
+ 49a:	99 24       	eor	r9, r9
+ 49c:	03 e0       	ldi	r16, 0x03	; 3
+ 49e:	5e 01       	movw	r10, r28
+ 4a0:	08 94       	sec
+ 4a2:	a1 1c       	adc	r10, r1
+ 4a4:	b1 1c       	adc	r11, r1
+ 4a6:	f5 01       	movw	r30, r10
+ 4a8:	e0 0f       	add	r30, r16
+ 4aa:	f1 1d       	adc	r31, r1
+ 4ac:	ff 83       	std	Y+7, r31	; 0x07
+ 4ae:	ee 83       	std	Y+6, r30	; 0x06
+ 4b0:	c7 01       	movw	r24, r14
+ 4b2:	b6 01       	movw	r22, r12
+ 4b4:	2a e0       	ldi	r18, 0x0A	; 10
+ 4b6:	30 e0       	ldi	r19, 0x00	; 0
+ 4b8:	40 e0       	ldi	r20, 0x00	; 0
+ 4ba:	50 e0       	ldi	r21, 0x00	; 0
+ 4bc:	55 d0       	rcall	.+170    	; 0x568 <__divmodsi4>
+ 4be:	60 5d       	subi	r22, 0xD0	; 208
+ 4c0:	ee 81       	ldd	r30, Y+6	; 0x06
+ 4c2:	ff 81       	ldd	r31, Y+7	; 0x07
+ 4c4:	60 83       	st	Z, r22
+ 4c6:	c7 01       	movw	r24, r14
+ 4c8:	b6 01       	movw	r22, r12
+ 4ca:	2a e0       	ldi	r18, 0x0A	; 10
+ 4cc:	30 e0       	ldi	r19, 0x00	; 0
+ 4ce:	40 e0       	ldi	r20, 0x00	; 0
+ 4d0:	50 e0       	ldi	r21, 0x00	; 0
+ 4d2:	4a d0       	rcall	.+148    	; 0x568 <__divmodsi4>
+ 4d4:	c9 01       	movw	r24, r18
+ 4d6:	da 01       	movw	r26, r20
+ 4d8:	6c 01       	movw	r12, r24
+ 4da:	7d 01       	movw	r14, r26
+ 4dc:	01 50       	subi	r16, 0x01	; 1
+ 4de:	c1 14       	cp	r12, r1
+ 4e0:	d1 04       	cpc	r13, r1
+ 4e2:	e1 04       	cpc	r14, r1
+ 4e4:	f1 04       	cpc	r15, r1
+ 4e6:	f9 f6       	brne	.-66     	; 0x4a6 <__stack+0x47>
+ 4e8:	99 20       	and	r9, r9
+ 4ea:	41 f0       	breq	.+16     	; 0x4fc <__stack+0x9d>
+ 4ec:	a0 0e       	add	r10, r16
+ 4ee:	b1 1c       	adc	r11, r1
+ 4f0:	8d e2       	ldi	r24, 0x2D	; 45
+ 4f2:	f5 01       	movw	r30, r10
+ 4f4:	80 83       	st	Z, r24
+ 4f6:	02 c0       	rjmp	.+4      	; 0x4fc <__stack+0x9d>
+ 4f8:	80 e3       	ldi	r24, 0x30	; 48
+ 4fa:	8c 83       	std	Y+4, r24	; 0x04
+ 4fc:	ce 01       	movw	r24, r28
+ 4fe:	01 96       	adiw	r24, 0x01	; 1
+ 500:	5e df       	rcall	.-324    	; 0x3be <TM1637_display_c_str>
+ 502:	27 96       	adiw	r28, 0x07	; 7
+ 504:	0f b6       	in	r0, 0x3f	; 63
+ 506:	f8 94       	cli
+ 508:	de bf       	out	0x3e, r29	; 62
+ 50a:	0f be       	out	0x3f, r0	; 63
+ 50c:	cd bf       	out	0x3d, r28	; 61
+ 50e:	cf 91       	pop	r28
+ 510:	df 91       	pop	r29
+ 512:	0f 91       	pop	r16
+ 514:	ff 90       	pop	r15
+ 516:	ef 90       	pop	r14
+ 518:	df 90       	pop	r13
+ 51a:	cf 90       	pop	r12
+ 51c:	bf 90       	pop	r11
+ 51e:	af 90       	pop	r10
+ 520:	9f 90       	pop	r9
+ 522:	08 95       	ret
 
-00000402 <__udivmodsi4_ep>:
- 402:	66 1f       	adc	r22, r22
- 404:	77 1f       	adc	r23, r23
- 406:	88 1f       	adc	r24, r24
- 408:	99 1f       	adc	r25, r25
- 40a:	1a 94       	dec	r1
- 40c:	69 f7       	brne	.-38     	; 0x3e8 <__udivmodsi4_loop>
- 40e:	60 95       	com	r22
- 410:	70 95       	com	r23
- 412:	80 95       	com	r24
- 414:	90 95       	com	r25
- 416:	9b 01       	movw	r18, r22
- 418:	ac 01       	movw	r20, r24
- 41a:	bd 01       	movw	r22, r26
- 41c:	cf 01       	movw	r24, r30
- 41e:	08 95       	ret
+00000524 <__udivmodsi4>:
+ 524:	a1 e2       	ldi	r26, 0x21	; 33
+ 526:	1a 2e       	mov	r1, r26
+ 528:	aa 1b       	sub	r26, r26
+ 52a:	bb 1b       	sub	r27, r27
+ 52c:	fd 01       	movw	r30, r26
+ 52e:	0d c0       	rjmp	.+26     	; 0x54a <__udivmodsi4_ep>
 
-00000420 <_exit>:
- 420:	f8 94       	cli
+00000530 <__udivmodsi4_loop>:
+ 530:	aa 1f       	adc	r26, r26
+ 532:	bb 1f       	adc	r27, r27
+ 534:	ee 1f       	adc	r30, r30
+ 536:	ff 1f       	adc	r31, r31
+ 538:	a2 17       	cp	r26, r18
+ 53a:	b3 07       	cpc	r27, r19
+ 53c:	e4 07       	cpc	r30, r20
+ 53e:	f5 07       	cpc	r31, r21
+ 540:	20 f0       	brcs	.+8      	; 0x54a <__udivmodsi4_ep>
+ 542:	a2 1b       	sub	r26, r18
+ 544:	b3 0b       	sbc	r27, r19
+ 546:	e4 0b       	sbc	r30, r20
+ 548:	f5 0b       	sbc	r31, r21
 
-00000422 <__stop_program>:
- 422:	ff cf       	rjmp	.-2      	; 0x422 <__stop_program>
+0000054a <__udivmodsi4_ep>:
+ 54a:	66 1f       	adc	r22, r22
+ 54c:	77 1f       	adc	r23, r23
+ 54e:	88 1f       	adc	r24, r24
+ 550:	99 1f       	adc	r25, r25
+ 552:	1a 94       	dec	r1
+ 554:	69 f7       	brne	.-38     	; 0x530 <__udivmodsi4_loop>
+ 556:	60 95       	com	r22
+ 558:	70 95       	com	r23
+ 55a:	80 95       	com	r24
+ 55c:	90 95       	com	r25
+ 55e:	9b 01       	movw	r18, r22
+ 560:	ac 01       	movw	r20, r24
+ 562:	bd 01       	movw	r22, r26
+ 564:	cf 01       	movw	r24, r30
+ 566:	08 95       	ret
+
+00000568 <__divmodsi4>:
+ 568:	97 fb       	bst	r25, 7
+ 56a:	09 2e       	mov	r0, r25
+ 56c:	05 26       	eor	r0, r21
+ 56e:	0e d0       	rcall	.+28     	; 0x58c <__divmodsi4_neg1>
+ 570:	57 fd       	sbrc	r21, 7
+ 572:	04 d0       	rcall	.+8      	; 0x57c <__divmodsi4_neg2>
+ 574:	d7 df       	rcall	.-82     	; 0x524 <__udivmodsi4>
+ 576:	0a d0       	rcall	.+20     	; 0x58c <__divmodsi4_neg1>
+ 578:	00 1c       	adc	r0, r0
+ 57a:	38 f4       	brcc	.+14     	; 0x58a <__divmodsi4_exit>
+
+0000057c <__divmodsi4_neg2>:
+ 57c:	50 95       	com	r21
+ 57e:	40 95       	com	r20
+ 580:	30 95       	com	r19
+ 582:	21 95       	neg	r18
+ 584:	3f 4f       	sbci	r19, 0xFF	; 255
+ 586:	4f 4f       	sbci	r20, 0xFF	; 255
+ 588:	5f 4f       	sbci	r21, 0xFF	; 255
+
+0000058a <__divmodsi4_exit>:
+ 58a:	08 95       	ret
+
+0000058c <__divmodsi4_neg1>:
+ 58c:	f6 f7       	brtc	.-4      	; 0x58a <__divmodsi4_exit>
+ 58e:	90 95       	com	r25
+ 590:	80 95       	com	r24
+ 592:	70 95       	com	r23
+ 594:	61 95       	neg	r22
+ 596:	7f 4f       	sbci	r23, 0xFF	; 255
+ 598:	8f 4f       	sbci	r24, 0xFF	; 255
+ 59a:	9f 4f       	sbci	r25, 0xFF	; 255
+ 59c:	08 95       	ret
+
+0000059e <_exit>:
+ 59e:	f8 94       	cli
+
+000005a0 <__stop_program>:
+ 5a0:	ff cf       	rjmp	.-2      	; 0x5a0 <__stop_program>

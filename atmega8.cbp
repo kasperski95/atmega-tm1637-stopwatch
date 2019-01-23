@@ -45,6 +45,10 @@
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="tm1637.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tm1637.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
