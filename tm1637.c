@@ -14,6 +14,15 @@
  * - library: https://github.com/lpodkalicki/attiny-tm1637-library
  * - documentation: https://github.com/lpodkalicki/attiny-tm1637-library/README.md
  * - TM1637 datasheet: https://github.com/lpodkalicki/attiny-tm1637-library/blob/master/docs/TM1637_V2.4_EN.pdf
+ *
+ * ============================================================================================================
+ *
+ * modified by Arkadiusz Kasprzyk. Tested on ATmega8A.
+ *
+ * Features:
+ * - display character [a-z][0-9]{-=', _}
+ * - display first 4 characters of c-string
+ * - display integer from -999 to 9999
  */
 
 #include <avr/io.h>
@@ -29,8 +38,8 @@
 #define	TM1637_CLK_HIGH()		(PORTC |= _BV(TM1637_CLK_PIN))
 #define	TM1637_CLK_LOW()		(PORTC &= ~_BV(TM1637_CLK_PIN))
 
-static uint8_t TM1637_send_config(const uint8_t enable, const uint8_t brightness);
-static uint8_t TM1637_send_command(const uint8_t value);
+static void TM1637_send_config(const uint8_t enable, const uint8_t brightness);
+static void TM1637_send_command(const uint8_t value);
 static void TM1637_start(void);
 static void TM1637_stop(void);
 static uint8_t TM1637_write_byte(uint8_t value);
@@ -57,7 +66,7 @@ PROGMEM const uint8_t _chars2segments[] =
 	0b01110001,  // F
 	0b01101111,  // 9
 	0b01110100,  // h
-	0b00110000,  // I
+	0b00010000,  // i
 	0b00001110,  // J
 	0b01110110,  // H
 	0b00111000,  // L
@@ -93,73 +102,51 @@ TM1637_init(const uint8_t enable, const uint8_t brightness)
 }
 
 void
-TM1637_enable(const uint8_t value)
-{
-	TM1637_send_config(value, _config & TM1637_BRIGHTNESS_MAX);
-}
-
-void
-TM1637_set_brightness(const uint8_t value)
-{
-	TM1637_send_config(_config & TM1637_SET_DISPLAY_ON,
-		value & TM1637_BRIGHTNESS_MAX);
-}
-
-uint8_t
-TM1637_display_segments(const uint8_t position, const uint8_t segments)
-{
-    uint8_t result;
-	TM1637_send_command(TM1637_CMD_SET_DATA | TM1637_SET_DATA_F_ADDR);
-	TM1637_start();
-	result = TM1637_write_byte(TM1637_CMD_SET_ADDR | (position & (TM1637_POSITION_MAX - 1)));
-	result &= TM1637_write_byte(segments);
-	TM1637_stop();
-	return result;
-}
-
-uint8_t
 TM1637_display_integer(int32_t number) {
     uint8_t buffer_size = 4;
     char buffer[] = {' ',' ',' ',' ','\0'};
     uint8_t i, bNegative = 0;
 
     if (number > 9999) {
-        return TM1637_display_c_str("E999");
+        TM1637_display_c_str("E999");
     } else if (number < -999) {
-        return TM1637_display_c_str("E-99");
+        TM1637_display_c_str("E-99");
     } else {
+        // make number positive
         if (number < 0) {
             bNegative = 1;
             number *= -1;
         }
+
+        // convert to c-string
         i = buffer_size - 1;
         if (number > 0) {
             for (; number > 0; --i) {
+                // convert to digit code in ASCII table
                 buffer[i] = (number % 10) + '0';
                 number /= 10;
             }
             if (bNegative) buffer[i] = '-';
         } else
             buffer[i] = '0';
-        return TM1637_display_c_str(buffer);
+
+        TM1637_display_c_str(buffer);
     }
 }
 
-uint8_t
+void
 TM1637_display_c_str(const char c_str[]) {
     uint8_t i = 0;
-    uint8_t result = 1;
     uint8_t strlen = TM1637_POSITION_MAX;
     for (; i < TM1637_POSITION_MAX; ++i) {
         if (c_str[i] == '\0') strlen = i;
 
-        if (i < strlen) result &= TM1637_display_char(i, c_str[i]);
-        else result = TM1637_display_char(i, 0);
+        if (i < strlen)TM1637_display_char(i, c_str[i]);
+        else TM1637_display_char(i, ' ');
     }
-    return result;
 }
 
-uint8_t
+void
 TM1637_display_char(const uint8_t position, const uint8_t c)
 {
 	uint8_t segments;
@@ -177,7 +164,6 @@ TM1637_display_char(const uint8_t position, const uint8_t c)
         case ' ': offset = -' ' + 41; break;
 	}
 
-
 	segments = pgm_read_byte_near((uint8_t *)&_chars2segments + c + offset);
 
 	// display colon, if is enabled
@@ -186,7 +172,7 @@ TM1637_display_char(const uint8_t position, const uint8_t c)
 		_segments = segments;
 	}
 
-	return TM1637_display_segments(position, segments);
+	TM1637_display_segments(position, segments);
 }
 
 void
@@ -210,24 +196,45 @@ TM1637_clear(void)
 	}
 }
 
-uint8_t
+void
+TM1637_display_segments(const uint8_t position, const uint8_t segments)
+{
+	TM1637_send_command(TM1637_CMD_SET_DATA | TM1637_SET_DATA_F_ADDR);
+	TM1637_start();
+	TM1637_write_byte(TM1637_CMD_SET_ADDR | (position & (TM1637_POSITION_MAX - 1)));
+	TM1637_write_byte(segments);
+	TM1637_stop();
+}
+
+void
+TM1637_enable(const uint8_t value)
+{
+	TM1637_send_config(value, _config & TM1637_BRIGHTNESS_MAX);
+}
+
+void
+TM1637_set_brightness(const uint8_t value)
+{
+	TM1637_send_config(_config & TM1637_SET_DISPLAY_ON,
+		value & TM1637_BRIGHTNESS_MAX);
+}
+
+void
 TM1637_send_config(const uint8_t enable, const uint8_t brightness)
 {
 
 	_config = (enable ? TM1637_SET_DISPLAY_ON : TM1637_SET_DISPLAY_OFF) |
 		(brightness > TM1637_BRIGHTNESS_MAX ? TM1637_BRIGHTNESS_MAX : brightness);
 
-	return TM1637_send_command(TM1637_CMD_SET_DSIPLAY | _config);
+	TM1637_send_command(TM1637_CMD_SET_DSIPLAY | _config);
 }
 
-uint8_t
+void
 TM1637_send_command(const uint8_t value)
 {
-    uint8_t result;
 	TM1637_start();
-	result = TM1637_write_byte(value);
+	TM1637_write_byte(value);
 	TM1637_stop();
-	return result;
 }
 
 void

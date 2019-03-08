@@ -14,12 +14,19 @@
  * - library: https://github.com/lpodkalicki/attiny-tm1637-library
  * - documentation: https://github.com/lpodkalicki/attiny-tm1637-library/README.md
  * - TM1637 datasheet: https://github.com/lpodkalicki/attiny-tm1637-library/blob/master/docs/TM1637_V2.4_EN.pdf
+ *
+ * ============================================================================================================
+ *
+ * modified by Arkadiusz Kasprzyk. Tested on ATmega8A.
+ *
+ * Features:
+ * - display character [a-z][0-9]{-=', _}
+ * - display first 4 characters of c-string
+ * - display integer from -999 to 9999
  */
 
-#ifndef	_ATTINY_TM1637_H_
-#define	_ATTINY_TM1637_H_
-
-#include <stdint.h>
+#ifndef	TM1637_H_
+#define	TM1637_H_
 
 // Main Settings
 #define	TM1637_DIO_PIN			PC4
@@ -45,6 +52,7 @@
 #define	TM1637_SET_DISPLAY_OFF		0x00 // off
 #define	TM1637_SET_DISPLAY_ON		0x08 // on
 
+#include <stdint.h>
 
 /**
  * Initialize TM1637 display driver.
@@ -85,16 +93,24 @@ void TM1637_set_brightness(const uint8_t value);
  * - for character '-', segments=0b01000000
  * - etc.
  */
-uint8_t TM1637_display_segments(const uint8_t position, const uint8_t segments);
+void TM1637_display_segments(const uint8_t position, const uint8_t segments);
+
+/**
+ * Display first 4 characters of c-string
+ */
+void TM1637_display_c_str(const char cstr[]);
+
+/**
+ * Display integer from -999 to 9999.
+ * Display E999 or E-99 if number is not in the range.
+ */
+void TM1637_display_integer(int32_t number);
 
 
-
-
-uint8_t TM1637_display_c_str(const char cstr[]);
-
-uint8_t TM1637_display_integer(int32_t number);
-
-uint8_t TM1637_display_char(const uint8_t position, const uint8_t character);
+/**
+ * Display character [a-z][0-9]{-=', _}
+ */
+void TM1637_display_char(const uint8_t position, const uint8_t character);
 
 /**
  * Display colon on/off.
@@ -107,4 +123,4 @@ void TM1637_display_colon(const uint8_t value);
  */
 void TM1637_clear(void);
 
-#endif	/* !_ATTINY_TM1637_H_ */
+#endif

@@ -2,19 +2,19 @@
 1548144151 source:c:\users\arkad\onedrive\documents\edukacja\semestr iii\mikroprocesory i mikrokontrolery\_private\projekt\atmega8\fuse.c
 	<avr/io.h>
 
-1548264059 source:c:\users\arkad\onedrive\documents\edukacja\semestr iii\mikroprocesory i mikrokontrolery\_private\projekt\atmega8\main.c
+1548268523 source:c:\users\arkad\onedrive\documents\edukacja\semestr iii\mikroprocesory i mikrokontrolery\_private\projekt\atmega8\main.c
 	<stdint.h>
 	<avr/io.h>
 	<avr/interrupt.h>
 	<util/delay.h>
 	"tm1637.h"
 
-1548262705 source:c:\users\arkad\onedrive\documents\edukacja\semestr iii\mikroprocesory i mikrokontrolery\_private\projekt\atmega8\tm1637.c
+1548268213 source:c:\users\arkad\onedrive\documents\edukacja\semestr iii\mikroprocesory i mikrokontrolery\_private\projekt\atmega8\tm1637.c
 	<avr/io.h>
 	<avr/pgmspace.h>
 	<util/delay.h>
 	"tm1637.h"
 
-1548254144 c:\users\arkad\onedrive\documents\edukacja\semestr iii\mikroprocesory i mikrokontrolery\_private\projekt\atmega8\tm1637.h
+1548417871 c:\users\arkad\onedrive\documents\edukacja\semestr iii\mikroprocesory i mikrokontrolery\_private\projekt\atmega8\tm1637.h
 	<stdint.h>
 
